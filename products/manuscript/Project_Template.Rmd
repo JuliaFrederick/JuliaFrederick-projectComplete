@@ -1,7 +1,7 @@
 ---
-title: "Example Template for Data Analysis Project"
+title: "Examining Tickborne Disease Prevalence and the Effects Habitat and the Microbial Community Play"
 subtitle: ""
-author: Andreas Handel
+author: Julia Frederick
 institute: "University of Georgia"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -44,13 +44,19 @@ Note that this cited reference will show up at the end of the document, the refe
 # Introduction (required for part 1)
 
 ## General Background Information
-_Provide enough background on your topic that others can understand the why and how of your analysis_ 
+_Provide enough background on your topic that others can understand the why and how of your analysis_  
+Tickborne disease prevalence is on the rise in the United States with 50,000 cases being confirmed by the CDC each year. Lyme disease alone is the number one vector borne disease reported in the U.S. each year with over 30,000 cases, and the Center for Disease Control and Prevention (CDC) estimating over 300,000 cases actually occurring [REF]. A single species of tick is capable of transmitting multiple disease pathogens [REFS]. For example, Ixodes scapularis has a range covering the entire eastern half of the U.S. and is capable of transmitting pathogens that cause Lyme disease, anaplasmosis, ehrlichiosis, babesiosis, and Powassan virus [REF].  There are multiple tick species native to the U.S. that can spread at least one human disease, and the consequences of increased globalization and livestock trade are becoming apparent with invasive species making landfall. When investing multiple tick species, it becomes clear that each species has its own variation in lifecycle and disease prevalence that comes along with it. Knowing what these differences are give researchers the power to create control and prevention efforts for human disease. Current vector research is focusing on understanding the biology of these vectors in order to put future range expansions [REF], and increased disease threat [REF] into a clearer context. Our research aims to define trends over time in tick species looking into pathogen prevalence, and microbiome shifts. This information will inform future efforts to model disease expansion across the U.S. and into Canada. 
 
 ## Description of data and data source
-_Describe what the data is, what it contains, where it is from, etc._
+_Describe what the data is, what it contains, where it is from, etc._  
+We are currently working to finishing compiling this dataset. This project was begun by prior Master’s student, Madelyn Watson, in Dr. Travis Glenn’s lab. The data was collected but the project did not get completed before Madelyn’s time at UGA. In collaboration with Dr. Michael Yabsley and the Southeastern Cooperative Wildlife Disease Study (SCWDS) ticks were brought in from the eastern region of the United States over the course of a year. When collected the habitat type and location was recorded for future reference. These ticks were then IDed, and used for 16S and PCR in order to determine the presence of pathogens and the microbial community within each specimen. The pathogen and microbial community will not be investigated genetically, instead we will be determining changes in prevalence over time and space. We are currently working to compile all the previous spreadsheets from the different labs into a single location to move forward with analysis. There is the possibility that some variables are in this dataset that had not been discussed in detail with me or we’re forgotten by the current researchers at this time. 
 
 ## Questions/Hypotheses to be addressed
-_State the research questions you plan to answer with this analysis_
+_State the research questions you plan to answer with this analysis_  
+1. How the habitat effects the prevalence of pathogens in ticks?  
+2. How the microbial composition changes with the prevalence of pathogens?  
+3. How pathogen prevalence shifts over time within different habitats?
+
 
 
 

@@ -1,3 +1,6 @@
+Currently this folder contains updates to the manuscript folder, in the Project_Template.Rmd file, where I update the introduction section of the file.
+
+
 The folders inside this folder should contain all the products of your project.
 
 For a classical academic project, this will be a peer-reviewed manuscript. 

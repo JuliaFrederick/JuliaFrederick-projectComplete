@@ -1,3 +1,7 @@
+# This is Julia Frederick's class project repository
+# Update from September 11, 2019 
+Where the Project_Template.Rmd file in the manuscripts folder in the products folder is updated. The dataset is currently being compiled and will be uploaded into the data folder when that is complete. 
+
 # Overview
 
 A template file and folder structure for a data analysis project/paper done with R/Rmarkdown/Github. 

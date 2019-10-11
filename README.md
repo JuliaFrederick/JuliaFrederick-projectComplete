@@ -1,8 +1,12 @@
 # This is Julia Frederick's class project repository
-# Update from September 13, 2019
+#### Update from October 11, 2019
+Updated manuscript to include references and the type of data I had.
+I cleaned the data, and organized it to be easier to create graphs. I made a few data exploration graphs, and some exploritory data measures.
+
+#### Update from September 13, 2019
 The Project_Template.Rmd file in the manuscripts folder in the products folder has been updated. A new folder has ben added to this project called "excelDataFiles" this folder includes the raw excel files that are not currently ready for conversion to .csv files.   
 
-# Update from September 11, 2019 
+#### Update from September 11, 2019 
 Where the Project_Template.Rmd file in the manuscripts folder in the products folder is updated. The dataset is currently being compiled and will be uploaded into the data folder when that is complete. 
 
 # Overview

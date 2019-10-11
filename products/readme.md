@@ -1,3 +1,6 @@
+## October 11, 2019 Project 2 update
+Added in references, and updated the type of data in my manuscript.
+
 Currently this folder contains updates to the manuscript folder, in the Project_Template.Rmd file, where I update the introduction section of the file.
 
 

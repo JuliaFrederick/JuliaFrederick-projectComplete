@@ -8,24 +8,55 @@
 library(ggplot2)
 library(dplyr)
 library(broom)
+library(reshape2)
 
 #load data. path is relative to project directory.
-mydata <- readRDS("./data/processed_data/processeddata.rds")
+tickpath <- readRDS("./data/processed_data/processeddata_tickpath.rds")
 
-#take a look at the data
-p1 <- mydata %>% ggplot(aes(x=Height, y=Weight)) + geom_point() + geom_smooth(method='lm')
+#How the habitat effects the prevalence of pathogens in ticks?
+  #Total number of positive tests found in a habitat broken down by species.
+  #Creating the number of total pathogens
+tickpath$TotalPath <- rowSums(tickpath[,c("Rickettsia", "Ehrlichia.ewingii",
+                                          "Ehrlichia.chaffeensis", "Anaplasma.phagocytophilum", 
+                                          "Borrelia.spp", "PME")], na.rm=TRUE)
+#Associating all pathogen tests on a single tick with that tick
+meltpath <- melt(tickpath, id.vars=c("Season","Region","Site","Habitat","TransectNum","TickID",
+                                     "Species","Sex","Life.stage","TotalPath","NumberTicksFound"))
 
-#save figure
-ggsave(filename="./results/resultfigure.png",plot=p1) 
+speciesLand<-meltpath %>%
+  ggplot(aes(x=Habitat,y=value, fill=variable)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  facet_wrap(.~Species)
 
-  
+ggsave(filename="./results/speciesLandfigure.png",plot=speciesLand) 
+
 # fit linear model
-lmfit <- lm(Weight ~ Height, mydata)  
-
+lmfitSpecies <- lm(Habitat ~ Species, meltpath)  
+lmfitSpecies
 # place results from fit into a data frame with the tidy function
-lmtable <- broom::tidy(lmfit)
-
+lmtableSpecies <- broom::tidy(lmfitSpecies)
+lmtableSpecies
 # save table  
-saveRDS(lmtable, file = "./results/resulttable.rds")
+saveRDS(lmtableSpecies, file = "./results/resulttableSpecies.rds")
 
-  
+#How the tick lifestage prevelance is changed within habitat?
+lifeLand<-tickpath %>%
+  ggplot(aes(x=NumberTicksFound, fill=Life.stage)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_grid(Habitat~.)
+#Nymphal Amblyomma americanum is by far the most prevelant
+#Ixodes scapularis adults peak in the Fall, and A.A. peaks in summer
+
+ggsave(filename="./results/lifeLandfigure.png",plot=lifeLand) 
+
+# fit linear model
+lmfitLife <- lm(Life.stage ~ Habitat, tickpath)  
+lmfitLife
+# place results from fit into a data frame with the tidy function
+lmtableLife <- broom::tidy(lmfitLife)
+lmtableLife
+# save table  
+saveRDS(lmtableLife, file = "./results/resulttableLife.rds")
+

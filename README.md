@@ -1,13 +1,6 @@
 # This is Julia Frederick's class project repository
-#### Update from October 11, 2019
-Updated manuscript to include references and the type of data I had.
-I cleaned the data, and organized it to be easier to create graphs. I made a few data exploration graphs, and some exploritory data measures.
-
-#### Update from September 13, 2019
-The Project_Template.Rmd file in the manuscripts folder in the products folder has been updated. A new folder has ben added to this project called "excelDataFiles" this folder includes the raw excel files that are not currently ready for conversion to .csv files.   
-
-#### Update from September 11, 2019 
-Where the Project_Template.Rmd file in the manuscripts folder in the products folder is updated. The dataset is currently being compiled and will be uploaded into the data folder when that is complete. 
+#### Update from November 8, 2019
+In order to run this project only the `products/manuscript/ProjectTemplate.Rmd` file needs to be run. This includes code chucks that run through all cleaning, processing, and current analysis for this manuscript. For part 3 of this project I have undated this document to include some individual analysis as well as a random forest model for predicting total pathogen.
 
 # Overview
 

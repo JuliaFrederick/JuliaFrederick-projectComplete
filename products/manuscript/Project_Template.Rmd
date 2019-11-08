@@ -24,7 +24,7 @@ Note that this cited reference will show up at the end of the document, the refe
 
 ## General Background Information
 _Provide enough background on your topic that others can understand the why and how of your analysis_  
-Tickborne disease prevalence is on the rise in the United States with 50,000 cases being confirmed by the CDC each year. Lyme disease alone is the number one vector borne disease reported in the U.S. each year with over 30,000 cases, and the Center for Disease Control and Prevention (CDC) estimating over 300,000 cases actually occurring [@CDC]. A single species of tick is capable of transmitting multiple disease pathogens [@Adelson]. For example, Ixodes scapularis has a range covering the entire eastern half of the U.S. and is capable of transmitting pathogens that cause Lyme disease, anaplasmosis, ehrlichiosis, babesiosis, and Powassan virus [@Adelson; @Dantas].  There are multiple tick species native to the U.S. that can spread at least one human disease, and the consequences of increased globalization and livestock trade are becoming apparent with invasive species making landfall [@Jongejan]. When investing multiple tick species, it becomes clear that each species has its own variation in lifecycle and disease prevalence that comes along with it. Knowing what these differences are give researchers the power to create control and prevention efforts for human disease. Current vector research is focusing on understanding the biology of these vectors in order to put future range expansions [@Ginsberg], and increased disease threat [@Eisen; @Arsnoe] into a clearer context. Our research aims to define trends over time in tick species looking into pathogen prevalence, and microbiome shifts. This information will inform future efforts to model disease expansion across the U.S. and into Canada. 
+Tickborne disease prevalence is on the rise in the United States with 50,000 cases being confirmed by the CDC each year. The number one vector borne disease in the US is Lyme disease with 30,000 cases reported annually, and the Center for Disease Control and Prevention (CDC) estimating over 300,000 cases actually occurring [@CDC]. Understanding how these pathogens are being moved throughout the environment gives insight into risk prevention efforts and effective targets. Especially when considering that a single species of tick is capable of transmitting multiple disease pathogens [@Adelson]. There are multiple tick species native to the U.S. that can spread at least one human disease, and the consequences of increased globalization and livestock trade are becoming apparent with invasive species making landfall [@Jongejan]. For example, native species, _Ixodes scapularis_ has a range covering the entire eastern half of the U.S. and is capable of transmitting pathogens that cause Lyme disease, anaplasmosis, ehrlichiosis, babesiosis, and Powassan virus [@Adelson; @Dantas]. Multiple of these pathogens have been found in a single tick during field studies (co-infection) [REF]. Current research focusing on the dynamics of these co-infections has shown there to be correlations between specific pathogens occuring in higher frequencies [REF]. These co-infections can have an impact on human health and diagnostic tests used for detecting the specific pathogens [REF]. This isn't only an issue within species, because many tick species are the main vector for specific pathogens and these species can feed on the same source which will mingle the pathogens between species. When investing multiple tick species, it becomes clear that each species has its own variation in lifecycle and disease prevalence that comes along with it. Knowing what these differences are give researchers the power to create control and prevention efforts for human disease. Current vector research is focusing on understanding the biology of these vectors in order to put future range expansions [@Ginsberg], and increased disease threat [@Eisen; @Arsnoe] into a clearer context. Our research aims to define trends over time in tick species looking into pathogen prevalence, and microbiome shifts. This information will inform future efforts to model disease expansion across the U.S. and into Canada. 
 
 ## Description of data and data source
 _Describe what the data is, what it contains, where it is from, etc._  
@@ -34,27 +34,25 @@ Through the Southeastern Coopertative Wildlife Disease Study (SCWDS) ticks were 
 _State the research questions you plan to answer with this analysis_  
 __1. How the habitat effects the prevalence of pathogens in ticks?__  
 The habitats are broken into a few different locations, some more rural than others. The effect of habitat on pathogen prevalence is likely due to the different community make-up in each location. Doing this will give us an idea of how the community can sway pathogen prevalence in the select environment. In order to answer this question we will use an ANOVA, looking at habitat type and specific pathogen.  
-__2. How the microbial composition changes with the prevalence of pathogens?__  
-This data will give insight into how the microbial community and pathogen prevalence shift with or against each other over a period of time. It will show future intereactions that can be on interest within the microbiome of a tick. We will be using Chi squared tests to look at these changes and the interactions.   
-__3. How pathogen prevalence shifts over time within different habitats?__  
+__2. How pathogen prevalence shifts over time within different habitats?__  
 This will show how changes in habitat, likely due to temperature and humidity changes, effects the pathogen prevalence in a single area. We will be comparing habitats to each other through ANOVA tests.   
 
 
 # Methods and Results
-_In most research papers, results and methods are separate. You can combine them here if you find it easier. You are also welcome to structure things such that those are separate sections._ 
-
 ## Data aquisition
 _As applicable, explain where and how you got the data. If you directly import the data from an online source, you can combine this section with the next._  
 Through the Southeastern Coopertative Wildlife Disease Study (SCWDS) ticks were collected from the eastern region of the United States over the course of a year, the ticks used in this study were all from Georgia. In order to collect the ticks typical drag sampling was done in each transect of the area, with checks being done of the drag every 10m. When collected the habitat type and location was recorded for future reference. These ticks were then IDed through morphology, and used for 16S and PCR in order to determine the presence of pathogens and the microbial community within each specimen. The pathogen and microbial community will not be investigated genetically, instead we will be determining changes in prevalence over time and space. The data used for this analysis includes the pathogens *Rickettsia*, *Ehrlichia ewingii*, *Ehrlichia chaffeensis*, *Anaplasma phagocytophilum*, *Borrelia spp*, and Panola Mountain Ehrlichia (PME). The habitat information includes: season, region, site, and general habitat. The raw data can be found in the project file `./data/raw_data/RawDataTickPathLoc.csv`. This data is used for the analysis. 
 
 ## Data import and cleaning
-_Write code that reads in the file and cleans it so it's ready for analysis. Since this will be fairly long code for most datasets, it might be a good idea to have it in one or several R scripts. If that is the case, explain here briefly what each file does. The files themselves should be commented well so everyone can follow along._  
-```{r setup}
+_Write code that reads in the file and cleans it so it's ready for analysis. Since this will be fairly long code for most datasets, it might be a good idea to have it in one or several R scripts. If that is the case, explain here briefly what each file does. The files themselves should be commented well so everyone can follow along._   
+The data is originally imported from a `.csv` file which includes 16 variables and 1968 observations. These observations are from either a single nymph, a single adult, or a pool of larvae. The larvae need to be pooled as individually they do not contain enough DNA for detection. However, larvae could only be infected with pathogens that are transovarially passed to the offspring (like Rickettsia) and the two pathogens consistently tested for (*A. phagocytophilum* and *Borrelia spp.*) are not known to be transmitted in this way. In order to clean this data we first will import the data so all empty observations are coded as NA. Then we need to adjust a few levels within our variables because they have extra spaces or a spelled incorrectly. Once these are fixed we calculate the total number of pathogens found within single individuals. This is our main outcome of interest instead of looking at individual pathogens which weren't consistently tested.     
+```{r setup, include = FALSE}
 
 knitr::opts_chunk$set(warning=FALSE)
 
 #load needed packages. make sure they are installed.
 library(readxl)
+library(knitr)
 library(dplyr)
 library(DataCombine)
 library(ggplot2)
@@ -148,7 +146,10 @@ saveRDS(Totaltick, file = "../../data/processed_data/processeddata_Totaltick.rds
 
 
 
-```{r prelimanalysis}
+```{r prelimanalysis, include = FALSE }
+
+knitr::opts_chunk$set(warning=FALSE)
+
 #load needed packages. make sure they are installed.
 library(ggplot2)
 library(dplyr)
@@ -205,6 +206,8 @@ lmtableLife
 # save table  
 saveRDS(lmtableLife, file = "../../results/resulttableLife.rds")
 
+saveRDS(tickpath, file = "../../data/processed_data/processeddata_tickpath.rds")
+
 ```
 
 ## Univariate analysis
@@ -215,16 +218,132 @@ When comparing the prevalence of pathogens in all tick species in different habi
 Figure 1. Pathogen prevalence per species. This figure shows the number of individuals per species that tested positive for a particular pathogen.  
 
 We can also use this dataset to see if lifestage has any relationship to habitat (fig 2). Overall, we can see that BHL and Upland have the most ticks of any lifestage found throughout it. However, there are pockets in Upland that have large numbers of nymphs found in a single transect which is an interesting phenomenom.   
-![Figure 2. Tick lifestage and the habitat they are found.](../../results/lifeLandfigure.png)  
+![Figure 2. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.](../../results/lifeLandfigure.png)  
 Figure 2. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.  
 
 
 ## Bivariate analysis
 _Create plots or tables and compute simple statistics (e.g. t-tests, simple regression model with 1 predictor, etc.) to look for associations between your outcome(s) and each individual predictor variable_
+```{r, simplelm, include = FALSE }
+
+knitr::opts_chunk$set(warning=FALSE)
+
+library('caret')
+library('mlr')
+library('visdat')
+library('parallelMap')
+tickpath <- readRDS("../../data/processed_data/processeddata_tickpath.rds")
+
+xtickpath <- DropNA(tickpath, 'Borrelia.spp')
+xtickpath <- xtickpath[,c(17,1:16)]
+
+
+##Total Pathogen by Habitat
+# fit linear model
+lmfitPathHab <- lm(TotalPath ~ Habitat, xtickpath)  
+lmfitPathHab
+# place results from fit into a data frame with the tidy function
+lmtablePathHab <- broom::tidy(lmfitPathHab)
+lmtablePathHab
+# save table  
+saveRDS(lmtablePathHab, file = "../../results/resulttablePathHab.rds")
+
+##Total Pathogen by Habitat
+# fit linear model
+lmfitPathSea <- lm(TotalPath ~ Season, xtickpath)  
+lmfitPathSea
+# place results from fit into a data frame with the tidy function
+lmtablePathSea <- broom::tidy(lmfitPathSea)
+lmtablePathSea
+# save table  
+saveRDS(lmtablePathSea, file = "../../results/resulttablePathSea.rds")
+
+##Total Pathogen by Species
+# fit linear model
+lmfitPathSpe <- lm(TotalPath ~ Species, tickpath)  
+lmfitPathSpe
+# place results from fit into a data frame with the tidy function
+lmtablePathSpe <- broom::tidy(lmfitPathSpe)
+lmtablePathSpe
+# save table  
+saveRDS(lmtablePathSpe, file = "../../results/resulttablePathSpe.rds")
+
+```
+
+
+```{r}
+readRDS("../../results/resulttablePathHab.rds")
+
+readRDS("../../results/resulttablePathSea.rds")
+
+readRDS("../../results/resulttablePathSpe.rds")
+```
+
 
 
 ## Full analysis
 _Use one or several suitable statistical/machine learning methods to analyze your data and to produce meaningful figures, tables, etc. This might again be code that is best placed in one or several separate R scripts that need to be well documented. You can then load the results produced by this code_
+
+```{r, tree, include = FALSE }
+
+knitr::opts_chunk$set(warning=FALSE)
+
+library('forcats')
+library('doParallel')
+library('rpart')
+library('rpart.plot')
+library('mda')
+library('ranger')
+library('e1071')
+library('gbm')
+
+#Using the whole data file, but removing the exact pathogens because we are just concerned with pathogen prevalence
+colnames(tickpath)
+tickpath <- tickpath[,c(17,1:16)]
+xytickpath <- tickpath[,-c(6,8,11:16)]
+
+#Creating a train data set
+
+set.seed(123)
+trainset <- caret::createDataPartition(y = xytickpath$TotalPath, p = 0.7, list = FALSE)
+data_train = xytickpath[trainset,] #extract observations/rows for training, assign to new variable
+data_test = xytickpath[-trainset,] #do the same for the test set
+
+n_cores <- 4 #number of cores to use
+cl <- makePSOCKcluster(n_cores)
+registerDoParallel(cl) #comment out this line if you don't want parallel computing
+
+set.seed(1111) #makes each code block reproducible
+outcomename = "TotalPath"
+Npred <- ncol(data_train)-1 # number of predictors
+resultmat <- data.frame(Variable = names(data_train)[-1], Accuracy = rep(0,Npred)) #store performance for each variable
+
+fitControl <- trainControl(method="repeatedcv",number=5,repeats=5) 
+fit1 = caret::train(TotalPath  ~ ., data=data_train, method="rpart",  trControl = fitControl, na.action = na.pass, tuneLength = 10) 
+print(fit1$results)
+
+prp(fit1$finalModel, extra = 1, type = 1)
+ww=17.8/2.54; wh=ww; #for saving plot
+dev.print(device=png,width=ww,height=wh,units="in",res=600,file="rparttree.png") #save tree to file
+
+
+##Full data set
+set.seed(1111) #makes each code block reproducible
+outcomename = "TotalPath"
+Npred <- ncol(xytickpath)-1 # number of predictors
+resultmat <- data.frame(Variable = names(xytickpath)[-1], Accuracy = rep(0,Npred)) #store performance for each variable
+
+fitControl <- trainControl(method="repeatedcv",number=5,repeats=5) 
+fit2 = caret::train(TotalPath  ~ ., data=xytickpath, method="rpart",  trControl = fitControl, na.action = na.pass, tuneLength = 10) 
+print(fit2$results)
+
+prp(fit2$finalModel, extra = 1, type = 1)
+ww=17.8/2.54; wh=ww; #for saving plot
+dev.print(device=png,width=ww,height=wh,units="in",res=600,file="../../results/rparttreeFull.png") #save tree to file
+```
+When seeing which variables influence total pathogen's in an individual we get a decision tree that covers a few of the main key indicators in an environment (figure 3). This tree is showing that tick density in a region is the largest predictor and then is further defined by species, season, and habitat. All of which make biological sense. 
+
+![Figure 3. Decision Tree for Predictors of Total Pathogen](../../results/rparttreeFull.png) 
 
 # Discussion
 

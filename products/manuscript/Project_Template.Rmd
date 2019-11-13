@@ -34,9 +34,9 @@ Through the Southeastern Coopertative Wildlife Disease Study (SCWDS) ticks were 
 _State the research questions you plan to answer with this analysis_  
 __1. How the habitat effects the prevalence of pathogens in ticks?__  
 The habitats are broken into a few different locations, some more rural than others. The effect of habitat on pathogen prevalence is likely due to the different community make-up in each location. Doing this will give us an idea of how the community can sway pathogen prevalence in the select environment. In order to answer this question we will use an ANOVA, looking at habitat type and specific pathogen.  
-__2. How pathogen prevalence shifts over time within different habitats?__  
-This will show how changes in habitat, likely due to temperature and humidity changes, effects the pathogen prevalence in a single area. We will be comparing habitats to each other through ANOVA tests.   
-
+__2. What factors have the greatest influence on a tick carrying a pathogen?__
+__3. What influences *Ixodes scapularis* to have *Borrelia spp.*?__
+ 
 
 # Methods and Results
 ## Data aquisition
@@ -47,170 +47,18 @@ Through the Southeastern Coopertative Wildlife Disease Study (SCWDS) ticks were 
 _Write code that reads in the file and cleans it so it's ready for analysis. Since this will be fairly long code for most datasets, it might be a good idea to have it in one or several R scripts. If that is the case, explain here briefly what each file does. The files themselves should be commented well so everyone can follow along._   
 The data is originally imported from a `.csv` file which includes 16 variables and 1968 observations. These observations are from either a single nymph, a single adult, or a pool of larvae. The larvae need to be pooled as individually they do not contain enough DNA for detection. However, larvae could only be infected with pathogens that are transovarially passed to the offspring (like Rickettsia) and the two pathogens consistently tested for (*A. phagocytophilum* and *Borrelia spp.*) are not known to be transmitted in this way. In order to clean this data we first will import the data so all empty observations are coded as NA. Then we need to adjust a few levels within our variables because they have extra spaces or a spelled incorrectly. Once these are fixed we calculate the total number of pathogens found within single individuals. This is our main outcome of interest instead of looking at individual pathogens which weren't consistently tested.     
 ```{r setup, include = FALSE}
-
-knitr::opts_chunk$set(warning=FALSE)
-
-#load needed packages. make sure they are installed.
-library(readxl)
-library(knitr)
-library(dplyr)
-library(DataCombine)
-library(ggplot2)
-library(stats)
-library(reshape2)
-
-#load data. path is relative to project directory.
-#plateres <- read.csv("./data/raw_data/CompiledPlateResults.csv")
-tickpath <- read.csv("../../data/raw_data/RawDataTickPathLoc.csv",na.strings = c("", "NA"))
-    #Add NA to observations where pathogen species was not tested (all observations without neg/pos were not tested)
-    #Where sex is blank it is a nymph or larval cluster which do not currently phenotypically sex -> add NA to those columns
-
-#take a look at the data
-dplyr::glimpse(tickpath)
-#Note to self PME = Panola Mountain Ehrlichia
-
-####Processing data####
-
-#Renaming columns that don't convert from the .csv file
-names(tickpath)[1]<-"Season"
-names(tickpath)[5]<-"TransectNum"
-names(tickpath)[6]<-"TickID"
-
-#Renaming the "Borrelia.spp." column to not have the . at the end
-names(tickpath)[14]<-"Borrelia.spp"
- 
-#Checking that all factors are coded correctly
-levels(tickpath$Site)
-  ##Some sites have spaces at the end that shouldn't be there, 
-    #or have two names for the same place
-tickpath$Site <- replace(tickpath$Site, tickpath$Site == "Sewee ", "Sewee")
-tickpath$Site <- replace(tickpath$Site, tickpath$Site == "SRS North", "SRS N")
-tickpath$Site <- replace(tickpath$Site, tickpath$Site == "SRS S ", "SRS S")
-tickpath$Site <- replace(tickpath$Site, tickpath$Site == "Wando ", "Wando")
-tickpath$Site <- replace(tickpath$Site, tickpath$Site == "FM McConnell", "McConnell")
-tickpath$Site <- factor(tickpath$Site) 
-levels(tickpath$Site)
-
-levels(tickpath$Habitat)
-  ##Subset of "Upland" has an extra space at the end
-tickpath$Habitat <- replace(tickpath$Habitat, tickpath$Habitat == "Upland ", "Upland")
-tickpath$Habitat <- factor(tickpath$Habitat) 
-levels(tickpath$Habitat)
-
-levels(tickpath$Species)
-  ##Species has duplicated, one has an extra space at the end
-  #"Ixodes scapularis"      "Ixodes scapularis " Want to remove the space from the second
-tickpath$Species <- replace(tickpath$Species, tickpath$Species == "Ixodes scapularis ", "Ixodes scapularis")
-tickpath$Species <- factor(tickpath$Species) 
-levels(tickpath$Species)
-
-
-#Each pathogen species that is tested is listed at "Pos___" or "Neg___" with 3 letters corresponding to the pathogen
-  #need to transform to 0 for neg, 1 for positive
-positiveNames <- c("PosRick","PosEew", "PosEch", "PosAna", "PosBor", "PosPME")
-negNames <- c("NegRick", "negRick", "NegEew", "NegEch", "NegAna", "NegBor", "NegPME", "NegPMe")
-columnNames <- c("Rickettsia", "Ehrlichia.ewingii", "Ehrlichia.chaffeensis", "Anaplasma.phagocytophilum", "Borrelia.spp", "PME")
-
-#creating a dataframe that will have what needs to be changed and to what
-preplacedf <- data.frame("Current" = positiveNames, "New" = 1)
-nreplacedf <- data.frame("Current" = negNames, "New" = 0)
-replacedf <- rbind(preplacedf, nreplacedf)
-
-#FindReplace is from the DataCombine package
-for (i in columnNames){
-  tickpath <- FindReplace(tickpath, i, replacedf, from = "Current", to = "New", exact = TRUE)
-}
-
-#Change from character strings to numeric
-sapply(tickpath, class)
-tickpath[columnNames] <- sapply(tickpath[columnNames], as.numeric)
-sapply(tickpath, class)
-
-#Need total number of ticks found in each transect
-Totaltick<-tickpath %>% 
-  group_by(Season, Region, Site, Habitat, TransectNum, Species) %>%
-  count(Species)
-names(Totaltick)[7]<-"NumberTicksFound"
-
-tickpath<-merge(x=tickpath,y=Totaltick, by=c("Season","Region","Site","Habitat","TransectNum","Species"))
-
-##Need to reorder the seasons to put them in chronological order
-levels(tickpath$Season)
-tickpath$Season <- factor(tickpath$Season, levels = c("Spring", "Summer", "Fall", "Winter"))
-levels(tickpath$Season)
-
-saveRDS(tickpath, file = "../../data/processed_data/processeddata_tickpath.rds")
-saveRDS(Totaltick, file = "../../data/processed_data/processeddata_Totaltick.rds")
-
+source("../../code/processing_code/processingscript.R")
 ```
 
 
 
 ```{r prelimanalysis, include = FALSE }
-
-knitr::opts_chunk$set(warning=FALSE)
-
-#load needed packages. make sure they are installed.
-library(ggplot2)
-library(dplyr)
-library(broom)
-library(reshape2)
-
-#load data. path is relative to project directory.
-tickpath <- readRDS("../../data/processed_data/processeddata_tickpath.rds")
-
-#How the habitat effects the prevalence of pathogens in ticks?
-  #Total number of positive tests found in a habitat broken down by species.
-  #Creating the number of total pathogens
-tickpath$TotalPath <- rowSums(tickpath[,c("Rickettsia", "Ehrlichia.ewingii",
-                                          "Ehrlichia.chaffeensis", "Anaplasma.phagocytophilum", 
-                                          "Borrelia.spp", "PME")], na.rm=TRUE)
-#Associating all pathogen tests on a single tick with that tick
-meltpath <- melt(tickpath, id.vars=c("Season","Region","Site","Habitat","TransectNum","TickID",
-                                     "Species","Sex","Life.stage","TotalPath","NumberTicksFound"))
-
-speciesLand<-meltpath %>%
-  ggplot(aes(x=Habitat,y=value, fill=variable)) +
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  facet_wrap(.~Species)
-
-ggsave(filename="../../results/speciesLandfigure.png",plot=speciesLand) 
-
-# fit linear model
-lmfitSpecies <- lm(Habitat ~ Species, meltpath)  
-lmfitSpecies
-# place results from fit into a data frame with the tidy function
-lmtableSpecies <- broom::tidy(lmfitSpecies)
-lmtableSpecies
-# save table  
-saveRDS(lmtableSpecies, file = "../../results/resulttableSpecies.rds")
-
-#How the tick lifestage prevelance is changed within habitat?
-lifeLand<-tickpath %>%
-  ggplot(aes(x=NumberTicksFound, fill=Life.stage)) +
-  geom_bar() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  facet_grid(Habitat~.)
-#Nymphal Amblyomma americanum is by far the most prevelant
-#Ixodes scapularis adults peak in the Fall, and A.A. peaks in summer
-
-ggsave(filename="../../results/lifeLandfigure.png",plot=lifeLand) 
-
-# fit linear model
-lmfitLife <- lm(Life.stage ~ Habitat, tickpath)  
-lmfitLife
-# place results from fit into a data frame with the tidy function
-lmtableLife <- broom::tidy(lmfitLife)
-lmtableLife
-# save table  
-saveRDS(lmtableLife, file = "../../results/resulttableLife.rds")
-
-saveRDS(tickpath, file = "../../data/processed_data/processeddata_tickpath.rds")
+source("../../code/analysis_code/analysisscript.R")
 
 ```
 
 ## Univariate analysis
+### Dr. Handel - Most of my variables are categorical, so I'm not sure what the best analysis methods are, I tried applying what we used in class but I don't know.
 _Use a combination of text/tables/figures to explore and describe your data. You should produce plots or tables or other summary quantities for most of your variables. You definitely need to do it for the important variables, i.e. if you have main exposure or outcome variables, those need to be explored. Depending on the total number of variables in your dataset, explore all or some of the others._
  
 When comparing the prevalence of pathogens in all tick species in different habitats, trends begin to emerge. Here we look at how the total number of positive individuals are broken down by species (fig 1). From here we can see that _Rickettsia_ is the most common pathogen in _A. americanum_. However, for _I. scapularis_ we see that Borrelia species and _Anaplasma_ are the two most common. These results trend with what is in current literature.  
@@ -221,62 +69,28 @@ We can also use this dataset to see if lifestage has any relationship to habitat
 ![Figure 2. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.](../../results/lifeLandfigure.png)  
 Figure 2. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.  
 
+![Figure 3. Borrelia.spp Prevalence in Different Regions for Ixodes scapularis](../../results/BorrRegionfigure.png) 
+Figure 3. Borrelia.spp Prevalence in Different Regions for *Ixodes scapularis*. This figure shows the different Regions have similar sampling efforts and also that Borrelia.spp positive samples are significantly less than negative samples. 
 
 ## Bivariate analysis
 _Create plots or tables and compute simple statistics (e.g. t-tests, simple regression model with 1 predictor, etc.) to look for associations between your outcome(s) and each individual predictor variable_
-```{r, simplelm, include = FALSE }
-
-knitr::opts_chunk$set(warning=FALSE)
-
-library('caret')
-library('mlr')
-library('visdat')
-library('parallelMap')
-tickpath <- readRDS("../../data/processed_data/processeddata_tickpath.rds")
-
-xtickpath <- DropNA(tickpath, 'Borrelia.spp')
-xtickpath <- xtickpath[,c(17,1:16)]
-
-
-##Total Pathogen by Habitat
-# fit linear model
-lmfitPathHab <- lm(TotalPath ~ Habitat, xtickpath)  
-lmfitPathHab
-# place results from fit into a data frame with the tidy function
-lmtablePathHab <- broom::tidy(lmfitPathHab)
-lmtablePathHab
-# save table  
-saveRDS(lmtablePathHab, file = "../../results/resulttablePathHab.rds")
-
-##Total Pathogen by Habitat
-# fit linear model
-lmfitPathSea <- lm(TotalPath ~ Season, xtickpath)  
-lmfitPathSea
-# place results from fit into a data frame with the tidy function
-lmtablePathSea <- broom::tidy(lmfitPathSea)
-lmtablePathSea
-# save table  
-saveRDS(lmtablePathSea, file = "../../results/resulttablePathSea.rds")
-
-##Total Pathogen by Species
-# fit linear model
-lmfitPathSpe <- lm(TotalPath ~ Species, tickpath)  
-lmfitPathSpe
-# place results from fit into a data frame with the tidy function
-lmtablePathSpe <- broom::tidy(lmfitPathSpe)
-lmtablePathSpe
-# save table  
-saveRDS(lmtablePathSpe, file = "../../results/resulttablePathSpe.rds")
+```{r simplelm, include = FALSE }
+source("../../code/analysis_code/lmscript.R")
 
 ```
 
+### Dr. Handel - I'm not sure of the best way to present these tables
 
 ```{r}
-readRDS("../../results/resulttablePathHab.rds")
+lmtablePathHab <- readRDS("../../results/resulttablePathHab.rds")
+lmtablePathSea <- readRDS("../../results/resulttablePathSea.rds")
+lmtablePathSpe <- readRDS("../../results/resulttablePathSpe.rds")
+lmtableBor <- readRDS("../../results/resulttableBor.rds")
 
-readRDS("../../results/resulttablePathSea.rds")
-
-readRDS("../../results/resulttablePathSpe.rds")
+kable(lmtablePathHab, caption = "Table 1. How the different habitats are related to total pathogen")
+kable(lmtablePathSea, caption = "Table 1. How the different season are related to total pathogen")
+kable(lmtablePathSpe, caption = "Table 1. How the different species are related to total pathogen")
+kable(lmtableBor, caption = "Table 1. How the different regions are related to Borrelia.spp in Ixodes scapularis")
 ```
 
 
@@ -284,66 +98,18 @@ readRDS("../../results/resulttablePathSpe.rds")
 ## Full analysis
 _Use one or several suitable statistical/machine learning methods to analyze your data and to produce meaningful figures, tables, etc. This might again be code that is best placed in one or several separate R scripts that need to be well documented. You can then load the results produced by this code_
 
-```{r, tree, include = FALSE }
-
-knitr::opts_chunk$set(warning=FALSE)
-
-library('forcats')
-library('doParallel')
-library('rpart')
-library('rpart.plot')
-library('mda')
-library('ranger')
-library('e1071')
-library('gbm')
-
-#Using the whole data file, but removing the exact pathogens because we are just concerned with pathogen prevalence
-colnames(tickpath)
-tickpath <- tickpath[,c(17,1:16)]
-xytickpath <- tickpath[,-c(6,8,11:16)]
-
-#Creating a train data set
-
-set.seed(123)
-trainset <- caret::createDataPartition(y = xytickpath$TotalPath, p = 0.7, list = FALSE)
-data_train = xytickpath[trainset,] #extract observations/rows for training, assign to new variable
-data_test = xytickpath[-trainset,] #do the same for the test set
-
-n_cores <- 4 #number of cores to use
-cl <- makePSOCKcluster(n_cores)
-registerDoParallel(cl) #comment out this line if you don't want parallel computing
-
-set.seed(1111) #makes each code block reproducible
-outcomename = "TotalPath"
-Npred <- ncol(data_train)-1 # number of predictors
-resultmat <- data.frame(Variable = names(data_train)[-1], Accuracy = rep(0,Npred)) #store performance for each variable
-
-fitControl <- trainControl(method="repeatedcv",number=5,repeats=5) 
-fit1 = caret::train(TotalPath  ~ ., data=data_train, method="rpart",  trControl = fitControl, na.action = na.pass, tuneLength = 10) 
-print(fit1$results)
-
-prp(fit1$finalModel, extra = 1, type = 1)
-ww=17.8/2.54; wh=ww; #for saving plot
-dev.print(device=png,width=ww,height=wh,units="in",res=600,file="rparttree.png") #save tree to file
-
-
-##Full data set
-set.seed(1111) #makes each code block reproducible
-outcomename = "TotalPath"
-Npred <- ncol(xytickpath)-1 # number of predictors
-resultmat <- data.frame(Variable = names(xytickpath)[-1], Accuracy = rep(0,Npred)) #store performance for each variable
-
-fitControl <- trainControl(method="repeatedcv",number=5,repeats=5) 
-fit2 = caret::train(TotalPath  ~ ., data=xytickpath, method="rpart",  trControl = fitControl, na.action = na.pass, tuneLength = 10) 
-print(fit2$results)
-
-prp(fit2$finalModel, extra = 1, type = 1)
-ww=17.8/2.54; wh=ww; #for saving plot
-dev.print(device=png,width=ww,height=wh,units="in",res=600,file="../../results/rparttreeFull.png") #save tree to file
+```{r TotalPathtree, include = FALSE }
+source("../../code/analysis_code/rfTotalPathscript.R")
 ```
 When seeing which variables influence total pathogen's in an individual we get a decision tree that covers a few of the main key indicators in an environment (figure 3). This tree is showing that tick density in a region is the largest predictor and then is further defined by species, season, and habitat. All of which make biological sense. 
 
-![Figure 3. Decision Tree for Predictors of Total Pathogen](../../results/rparttreeFull.png) 
+![Figure 4. Decision Tree for Predictors of Total Pathogen](../../results/rparttreeFull.png) 
+
+```{r IscapBorTree, include=FALSE}
+source("../../code/analysis_code/rfIscapBorrscript.R")
+```
+
+![Figure 5. Decision Tree for Predictors of Borrelia.spp in Ixodes scapularis](../../results/rparttreeBorrelia.png)
 
 # Discussion
 

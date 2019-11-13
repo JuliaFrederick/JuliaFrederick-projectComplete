@@ -1,3 +1,6 @@
+##R code Update overmber 13, 2019
+This folder includes all R scripts need for the replication of this manuscript. These files are sourced in the Project_Template.Rmd file in the manuscript folder for this project.
+
 Place your various R or Rmd scripts in the appropriate folders.
 
 You can either have fewer large scripts, or multiple scripts that do only specific actions. Those can be R scripts or Rmd files. In either case, document the scripts and what goes on in them so well that someone else (including future you) can easily figure out what is happening.

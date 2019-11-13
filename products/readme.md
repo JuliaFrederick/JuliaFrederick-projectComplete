@@ -1,7 +1,5 @@
-## October 11, 2019 Project 2 update
-Added in references, and updated the type of data in my manuscript.
-
-Currently this folder contains updates to the manuscript folder, in the Project_Template.Rmd file, where I update the introduction section of the file.
+## November 13, 2019 Update
+This folder contains the main file needed to reproduce this project. within /manuscript/Project_Template.Rmd is the file needed to produce the final word document. Kitting this file will pull from other .R scripts located in the ../../code folder in this project.
 
 
 The folders inside this folder should contain all the products of your project.

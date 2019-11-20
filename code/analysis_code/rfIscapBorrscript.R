@@ -8,9 +8,10 @@ library('mda')
 library('ranger')
 library('e1071')
 library('gbm')
+library('here')
 
 #Using the whole data file, but removing the exact pathogens because we are just concerned with pathogen prevalence
-iscapbor<-readRDS("../../data/processed_data/processeddata_iscapbor.rds")
+iscapbor<-readRDS(here("././data/processed_data/processeddata_iscapbor.rds"))
 
 #Creating a train data set
 
@@ -34,4 +35,4 @@ print(fit1$results)
 
 prp(fit1$finalModel, extra = 1, type = 1)
 ww=17.8/2.54; wh=ww; #for saving plot
-dev.print(device=png,width=ww,height=wh,units="in",res=600,file="../../results/rparttreeBorrelia.png") #save tree to file
+dev.print(device=png,width=ww,height=wh,units="in",res=600,file=here("././results/rparttreeBorrelia.png")) #save tree to file

@@ -9,10 +9,11 @@ library(ggplot2)
 library(dplyr)
 library(broom)
 library(reshape2)
+library(here)
 
 #load data. path is relative to project directory.
-tickpath <- readRDS("../../data/processed_data/processeddata_tickpath.rds")
-iscapbor <- readRDS("../../data/processed_data/processeddata_iscapbor.rds")
+tickpath <- readRDS(here("././data/processed_data/processeddata_tickpath.rds"))
+iscapbor <- readRDS(here("././data/processed_data/processeddata_iscapbor.rds"))
 
 #How the habitat effects the prevalence of pathogens in ticks?
 #Total number of positive tests found in a habitat broken down by species.
@@ -30,7 +31,7 @@ speciesLand<-meltpath %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   facet_wrap(.~Species)
 
-ggsave(filename="../../results/speciesLandfigure.png",plot=speciesLand) 
+ggsave(filename=here("././results/speciesLandfigure.png"),plot=speciesLand) 
 
 # fit linear model
 lmfitSpecies <- lm(Habitat ~ Species, meltpath)  
@@ -39,7 +40,7 @@ lmfitSpecies
 lmtableSpecies <- broom::tidy(lmfitSpecies)
 lmtableSpecies
 # save table  
-saveRDS(lmtableSpecies, file = "../../results/resulttableSpecies.rds")
+saveRDS(lmtableSpecies, file = here("././results/resulttableSpecies.rds"))
 
 #How the tick lifestage prevelance is changed within habitat?
 lifeLand<-tickpath %>%
@@ -50,7 +51,7 @@ lifeLand<-tickpath %>%
 #Nymphal Amblyomma americanum is by far the most prevelant
 #Ixodes scapularis adults peak in the Fall, and A.A. peaks in summer
 
-ggsave(filename="../../results/lifeLandfigure.png",plot=lifeLand) 
+ggsave(filename=here("././results/lifeLandfigure.png"),plot=lifeLand) 
 
 # fit linear model
 lmfitLife <- lm(Life.stage ~ Habitat, tickpath)  
@@ -61,10 +62,10 @@ lmtableLife <- broom::tidy(lmfitLife)
 lmtableLife
 
 # save table  
-saveRDS(lmtableLife, file = "../../results/resulttableLife.rds")
-saveRDS(tickpath, file = "../../data/processed_data/processeddata_tickpath.rds")
+saveRDS(lmtableLife, file = here("././results/resulttableLife.rds"))
+saveRDS(tickpath, file = here("././data/processed_data/processeddata_tickpath.rds"))
 
 BorrRegion <- iscapbor %>%
   ggplot(aes(x=Borrelia.spp, fill = Region)) +
   geom_bar()
-ggsave(filename="../../results/BorrRegionfigure.png",plot=BorrRegion) 
+ggsave(filename=here("././results/BorrRegionfigure.png"),plot=BorrRegion) 

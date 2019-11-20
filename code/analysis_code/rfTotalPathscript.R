@@ -8,9 +8,10 @@ library('mda')
 library('ranger')
 library('e1071')
 library('gbm')
+library('here')
 
 #Using the whole data file, but removing the exact pathogens because we are just concerned with pathogen prevalence
-tickpath <- readRDS("../../data/processed_data/processeddata_tickpath.rds")
+tickpath <- readRDS(here("././data/processed_data/processeddata_tickpath.rds"))
 colnames(tickpath)
 tickpath <- tickpath[,c(17,1:16)]
 xytickpath <- tickpath[,-c(6,8,11:16)]
@@ -37,7 +38,7 @@ print(fit1$results)
 
 prp(fit1$finalModel, extra = 1, type = 1)
 ww=17.8/2.54; wh=ww; #for saving plot
-dev.print(device=png,width=ww,height=wh,units="in",res=600,file="rparttree.png") #save tree to file
+dev.print(device=png,width=ww,height=wh,units="in",res=600,file=here("././results/rparttree.png")) #save tree to file
 
 
 ##Full data set
@@ -52,4 +53,4 @@ print(fit2$results)
 
 prp(fit2$finalModel, extra = 1, type = 1)
 ww=17.8/2.54; wh=ww; #for saving plot
-dev.print(device=png,width=ww,height=wh,units="in",res=600,file="../../results/rparttreeFull.png") #save tree to file
+dev.print(device=png,width=ww,height=wh,units="in",res=600,file=here("././results/rparttreeFull.png")) #save tree to file

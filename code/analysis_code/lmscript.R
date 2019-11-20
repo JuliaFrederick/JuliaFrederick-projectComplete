@@ -3,7 +3,8 @@ library('caret')
 library('mlr')
 library('visdat')
 library('parallelMap')
-tickpath <- readRDS("../../data/processed_data/processeddata_tickpath.rds")
+library('here')
+tickpath <- readRDS(here("././data/processed_data/processeddata_tickpath.rds"))
 
 xtickpath <- DropNA(tickpath, 'Borrelia.spp')
 xtickpath <- xtickpath[,c(17,1:16)]
@@ -17,7 +18,7 @@ lmfitPathHab
 lmtablePathHab <- broom::tidy(lmfitPathHab)
 lmtablePathHab
 # save table  
-saveRDS(lmtablePathHab, file = "../../results/resulttablePathHab.rds")
+saveRDS(lmtablePathHab, file = here("././results/resulttablePathHab.rds"))
 
 ##Total Pathogen by Habitat
 # fit linear model
@@ -27,7 +28,7 @@ lmfitPathSea
 lmtablePathSea <- broom::tidy(lmfitPathSea)
 lmtablePathSea
 # save table  
-saveRDS(lmtablePathSea, file = "../../results/resulttablePathSea.rds")
+saveRDS(lmtablePathSea, file = here("././results/resulttablePathSea.rds"))
 
 ##Total Pathogen by Species
 # fit linear model
@@ -37,10 +38,10 @@ lmfitPathSpe
 lmtablePathSpe <- broom::tidy(lmfitPathSpe)
 lmtablePathSpe
 # save table  
-saveRDS(lmtablePathSpe, file = "../../results/resulttablePathSpe.rds")
+saveRDS(lmtablePathSpe, file = here("././results/resulttablePathSpe.rds"))
 
 ##Testing Iscap and Borrelia by Region
 lmBor <- lm(Borrelia.spp~Region, iscapbor) 
 lmBor
 lmtableBor <- broom::tidy(lmBor)
-saveRDS(lmtableBor, file = "../../results/resulttableBor.rds")
+saveRDS(lmtableBor, file = here("././results/resulttableBor.rds"))

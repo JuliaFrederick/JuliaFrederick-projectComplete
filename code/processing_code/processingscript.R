@@ -13,10 +13,11 @@ library(DataCombine)
 library(ggplot2)
 library(stats)
 library(reshape2)
+library(here)
 
 #load data. path is relative to project directory.
 #plateres <- read.csv("./data/raw_data/CompiledPlateResults.csv")
-tickpath <- read.csv("../../data/raw_data/RawDataTickPathLoc.csv",na.strings = c("", "NA"))
+tickpath <- read.csv(here("././data/raw_data/RawDataTickPathLoc.csv"),na.strings = c("", "NA"))
 #Add NA to observations where pathogen species was not tested (all observations without neg/pos were not tested)
 #Where sex is blank it is a nymph or larval cluster which do not currently phenotypically sex -> add NA to those columns
 
@@ -94,10 +95,11 @@ levels(tickpath$Season)
 tickpath$Season <- factor(tickpath$Season, levels = c("Spring", "Summer", "Fall", "Winter"))
 levels(tickpath$Season)
 
-saveRDS(tickpath, file = "../../data/processed_data/processeddata_tickpath.rds")
-saveRDS(Totaltick, file = "../../data/processed_data/processeddata_Totaltick.rds")
+saveRDS(tickpath, file = here("././data/processed_data/processeddata_tickpath.rds"))
+saveRDS(Totaltick, file = here("././data/processed_data/processeddata_Totaltick.rds"))
 
 iscapbor <- subset(tickpath, Species=="Ixodes scapularis")
 iscapbor <- iscapbor[,-c(5,7,10:12, 15:16)]
 iscapbor <- DropNA(iscapbor)
-saveRDS(iscapbor, file = "../../data/processed_data/processeddata_iscapbor.rds")
+saveRDS(iscapbor, file = here("././data/processed_data/processeddata_iscapbor.rds"))
+

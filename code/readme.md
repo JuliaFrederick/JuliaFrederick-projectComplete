@@ -1,4 +1,4 @@
-##R code Update overmber 13, 2019
+##R code Update November 25, 2019
 This folder includes all R scripts need for the replication of this manuscript. These files are sourced in the Project_Template.Rmd file in the manuscript folder for this project.
 
 Place your various R or Rmd scripts in the appropriate folders.

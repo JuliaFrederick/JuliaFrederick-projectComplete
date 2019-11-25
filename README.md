@@ -1,5 +1,5 @@
 # This is Julia Frederick's class project repository
-#### Update from November 8, 2019
+#### Update from November 25, 2019
 In order to run this project only the `products/manuscript/ProjectTemplate.Rmd` file needs to be run. This includes code chucks that pull from other files within this project that run through all cleaning, processing, and current analysis for this manuscript. For part 3 of this project I have updated this document to include some individual analysis as well as a random forest model for predicting total pathogen.  
 I have questions in the manuscript document. 
 

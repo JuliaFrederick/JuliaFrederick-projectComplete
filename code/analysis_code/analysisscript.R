@@ -10,10 +10,12 @@ library(dplyr)
 library(broom)
 library(reshape2)
 library(here)
+library(pander)
 
 #load data. path is relative to project directory.
 tickpath <- readRDS(here("././data/processed_data/processeddata_tickpath.rds"))
 iscapbor <- readRDS(here("././data/processed_data/processeddata_iscapbor.rds"))
+
 
 #How the habitat effects the prevalence of pathogens in ticks?
 #Total number of positive tests found in a habitat broken down by species.

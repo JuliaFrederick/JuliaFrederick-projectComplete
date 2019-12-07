@@ -1,0 +1,200 @@
+# Overview
+
+Title of project: "Determinants of tickborne pathogen prevalence"
+
+Author of project: Julia Frederick
+
+# Specific project content evaluation
+
+## Background, Context and Motivation
+How well is the context of the project described? Is a comprehensive background, including summary of previous/related work given? Is the project well placed into the context of existing work (including proper referencing of existing work). Is it clear why the project was undertaken and what new information it hopes to provide?
+
+### Feedback and Comments
+
+The author successfully demonstrates the value of tickborne disease research in general. I would like to see the background narrow its scope a bit more, however, leading into a paragraph that focuses on tick activity in Georgia, or even the southeast region, as the data used in this study focuses exclusively on ticks collected in Georgia. What are some key points about the history of ticks/tick pathogens in Georgia/the southeast US? In some places, the author implies that this research would be relevant in informing ".... future efforts to model disease expansion across the U.S. and into Canada," but I would argue that this is a bit too broad. If not, please consider including a statement on how learning about ticks in Georgia affects disease all the way up in Canada (definitely possible- climate change is likely shifting pathogen ranges northward!- but would appreciate a sentence directly stating this if that is the implication.)
+
+A smaller, more specific comment: can you explain the "general habitat" parameter a bit further in the introduction? It remains vague throughout, with statements like "The habitats are broken into a few different locations, some more rural than others and with different tree communities," but I would appreciate a bit more specifics on this, like stating the number of and giving a brief description of different habitat classes there are.  
+
+### Summary assessment
+* strong contextualization and motivation
+
+
+## Question description
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+
+### Feedback and Comments
+
+This section would be stronger with some of the comments I've made in the above section fleshed out a bit more in the introduction, and referenced again in these questions/descriptions of questions (for example, my comments above about giving more details about the habitat parameter would add necessary clarity to qeustion 1). Additionally:  
+
+* Can you elaborate/list "all variables collected that are biologically relevant," in reference to question 2? 
+* Can you, either here or in the introduction, give context as to why the host-pathogen relationship between Ixodes scapularis and Borrelia spp. is of particular interest, in reference to question 3? 
+* Can you, even briefly, give a sentence or two detailing how you plan to address each question, specifically, within the context of the data you have? This would make it more clear as to how the questions you want to ask specifically relate to and are appropriate for the data being used. 
+
+### Summary assessment
+* question/hypotheses somewhat explained
+
+
+## Data description
+How well is the data overall described? Is the source provided? Is a codebook or other meta-information available that makes it clear what the data is? 
+
+### Feedback and Comments
+Things that could be improved upon here:  
+
+* The section titled "Description of data and data source" in the introduction and the section "Data aquisition" in the methods are virtually identical. I find that what is written is more applicable to the former section, and that this "Data aquisition" section should describe more about how the literal data file was obtained. Was it downloaded off an online source? or was it something the author already had in their possession as part of their research? If this is the case, how could someone else access this data? Who should they contact?
+* I would suggest a much more detailed description of all variables in the analysis. For example, in my manuscript, I included the following section: 
+
+---
+
+_The Data_
+
+After the data request was approved, the raw data was sent by email and downloaded as a `.csv` file (`seastarkat_size_count_totals.csv`). Following the cleaning step (see cleaning methods), the finalized data was comprised of 12165 observations across 23 variables. This included the following (field definitions obtained from accompanying MARINe codebook file):
+
+* 14 categorical variables (factors)
+  * **`georegion:`** geographic region in which site is located
+  * **`bioregion:`** biogeographic region in which site is located
+  * **`island:`** the name of the island where the referenced site is located. Sites not on islands are designated as mainland.
+  * **`state:`** state where the referenced site is located.
+  
+* 9 numeric variables (integers/numeric)
+  * **`latitude:`** the number of degrees North of the equator, expressed in decimal degrees to 5 decimal places (NAD83).
+  * **`longitude:`** the number of degrees West of the Prime Meridian, expressed in decimal degrees to 5 decimal places (NAD83).
+
+.... etc. for all 23 variables 
+
+---
+
+* There is a portion of the "Data import and cleaning" section that I feel belongs more appropriately under a data description. This portion reads, "The data is originally imported from a .csv file which includes 16 variables and 1968 observations. These observations are from either a single nymph, a single adult, or a pool of larvae. The larvae need to be pooled as individually they do not contain enough DNA for pathogen detection. However, larvae could only be infected with pathogens that are transovarially passed to the offspring (like Rickettsia) and the two pathogens consistently tested for (A. phagocytophilum and Borrelia spp.) are not known to be transmitted in this way."
+
+### Summary assessment
+* source and overall structure of data somewhat explained
+
+## Data wrangling and exploratory analysis
+How well is the data cleaned/processed and explored? Are all steps reasonable and well explained? Are alternatives discussed and considered? Are meaningful exploratory results shown (e.g. in the supplementary materials)?
+
+### Feedback and Comments
+
+After moving the section I described above into a data description section instead, I think the written explanation for the data wrangling and exporatory analysis is good, aside from one point of confusion centering around the last statement of this section, "This is our main outcome of interest instead of looking at individual pathogens which weren’t consistently tested." This confuses me a lot. I don't really feel like I truly understand what you are looking to accomplish, and this statement surprised me, because (twice) you listed the pathogen species that were included in this analysis. If that information is not relevent, I would suggest omitting it so as to not give the reader information that they don't really need to know- its confusing because it has me wondering where that information fits in. 
+
+Comments on the wrangling/exploratory script ("processingscript.R"):
+
+* Some of the steps are accompanied by a description of that step while others are not. 
+* Did you create any visualizations to help you make sure the data was "clean"? I don't know that this was necessary, but I found it to be incredibly useful in my data wrangling endeavors.   
+
+### Summary assessment
+* some weaknesses in wrangling and exploratory component
+
+## Appropriateness of Analysis
+Were the analysis methods appropriate for the data? Was the analysis done properly? Were different components of the analysis (e.g. performance measure, variable selection, data pre-processing, model evaluation) done in the best way possible and explained well?
+
+### Feedback and Comments
+
+I will break up my comments by results sections:
+
+Univariate Analysis:  
+
+* This section is strong and reasonable. I would, however, consider making a bar graph to visually display the information contained in tables 1 and 2. A map detailing the sampling sites (color coded by region) would also be incredibly useful. 
+Bivariate analysis:  
+* It is incredibly difficult to read what is going on in figure 1. I would suggest plotting each species as a seperate graph so that the scales of each are adjusted so that we can see what is going on. Further, the caption doesn't fully describe what the figure is actually showing- the x-axis is habitat, but thats not mentioned in the figure caption. Also, the color coding isnt just "variable" it is the pathogen type... right? Attention to details like these would vastly improve the quality and utility of this figure.
+* Can you make table 3 a figure as well for consistency?
+
+Full Analysis- Random forest model:  
+
+* Can you list the variables that were excluded for not having biological significance so the reader can feel comfortable in agreeing with your decision to do this? 
+* There aren't really any methods in this section detailing what a RFM is and why it was used here. 
+* The first decision tree is useful and its meaning is discussed in the text. 
+* The second decision tree is not interpreted in the text. If you feel the results are not intereseting enough to be verbally discussed, the figure should be excluded as well. Otherwise, there should be some discussion of the results of it, like was done in the first decision tree. 
+
+Supplemental Material:
+The linear model component is not explained in terms of why it was performed, how it was performed, and what the results show. I think this should be added to the main document. 
+
+### Summary assessment
+* strong and reasonable analysis _**but execution of this section could be improved**_
+
+## Presentation
+How well are results presented? Are tables and figures easy to read and understand? Are the main figures/tables publication level quality? 
+
+### Feedback and Comments
+
+I touched on an aspect of the presentation in the above section with reference to figure 1. 
+
+Further, and in general, I think this manuscript is lacking in visual presentation of results. Unless the author has a specific reason for doing what they did, I think the supplemental material should be added to the main text, with the following edits:  
+
+* Figure 2 contains similar readability issues as figure 1. Because the values are so high for the BLH habitat, all other habitat histograms are largely uninterpretable because the scale of the y-axis prohibits useful visualization of the actual data being plotted. Please consider creating a seperate graph for each habitat without using the facet wrap function. 
+* It is hard to determine the trend you are trying to show us with all of the tables in the supplement. They likely contain useful and interesting information, but it is hard to distill with the abundance of numbers presented and the lack of any written text guiding us to the main points. 
+
+### Summary assessment
+* results are presented ok, with room for improvement
+
+## Discussion/Conclusions
+Are the study findings properly discussed? Are strengths and limitations acknowledged? Are findings interpreted properly?
+
+### Feedback and Comments
+
+Miscellaneous feedback:
+
+* Regarding the statement, "From this data we see that A. americanum mainly has Rickettsia species, not all Rickettsia species are pathogenic but a majority are."- this reads more like a statemnet that belongs in the results, not the discussion. Doing this, and referencing the figure that shows this result, would make this information more digestible, in my opinion. 
+* There are some very good references to other studies in this section, but this dominates the interpretation of the paper's own results. My understanding is that this section should be structured such that a statement of interpretation is made regarding the results of the data presented, then compared to similar or diverging results in other studies. 
+* Regarding the phrase, "Seeing which habitats have the majority of ticks in them, and at what lifestage"- unless I missed it, the author never actually states which habitats have the majority of ticks in them and at which lifestage it as at. 
+* I found the "Modeling" section to be, overall, very strong. The author did a very good job on this part! 
+* I found the points discussed under the "Strengths and Limitations" section to be tangential and not directly relevant to the study at hand. More applicable statements in this section might address things like: what are the strengths and weaknesses of the random forest model used? what are other modeling techniques that would've worked well to analyze this data but weren't because of time-constraints or other reasons? I don't find an analysis of the strengths and weaknesses of the sampling methods of the data used to be especially relevant or useful to critique in the context of this project. 
+
+### Summary assessment
+* minor parts wrong, missing or unclear
+
+# Overall project content evaluation
+Evaluate overall features of the project  by filling in the sections below.
+
+
+## Structure
+Is the project well structured? Are files in well labeled folders? Do files have reasonable names? Are all "junk" files not needed for analysis/reproduction removed? By just looking at files and folders, can you get an idea of how things fit together?
+
+### Feedback and Comments
+
+Feedback, in no particular order:  
+
+* The names of some files should be changed to be more specific to this study (for example, "Project_Template.docx/.Rmd" does not describe those files in their current state.)
+* The sections written in the "readme.md" file that are no longer relevant should be deleted. 
+* In the readme.md replication instructions, the supplemental file should be addressed/explained. 
+
+### Summary assessment
+
+* (mostly) well structured
+
+## Documentation 
+How well is the project documented? Are you able to understand each step of the whole analysis, each decision that was made, and each line of code? Is enough information provided as comments in code or as part of Rmd files? 
+
+### Feedback and Comments
+
+Overall, the structure of the analysis code is confusing in that it is hard to determine what is interpreted where based on the names. For example "analysisscript.R" is not useful- they are all analysis scripts. 
+
+Within these analysis scripts, individual steps are often documented, but larger contexts are often not addressed. For example, what is being done, overall, in the "lmscript.R" file? 
+
+### Summary assessment
+* decently documented with some gaps
+
+## Reproducibility
+Are all results fully reproducible? Is documentation provided which clearly explains how to reproduce things, and does it work without the need for any manual intervention?
+
+### Feedback and Comments
+
+Yes, the results are fully reproducible.
+
+### Summary assessment
+* fully reproducible without issues
+
+## Thoroughness
+How thorough was the overall study? Were alternatives (e.g. different ways of processing the data or different models) considered? Were alternatives discussed? Were the questions/hypotheses fully and thoroughly addressed?
+
+### Feedback and Comments
+
+Thoroughness could be improved in several different ways:  
+
+* different models could be run in addition to the RFM
+* the linear models that were run should be discussed in the main text results. 
+* alternative methods could and should be discussed- perhaps in the strengths and weaknesses section 
+
+### Summary assessment
+* decent level of thoroughness
+
+

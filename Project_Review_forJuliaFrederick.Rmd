@@ -1,0 +1,202 @@
+# Overview
+
+Title of project: Determinants of tickborne pathogen prevalence
+
+Author of project: Julia Frederick
+
+# Specific project content evaluation
+
+## Background, Context and Motivation
+How well is the context of the project described? Is a comprehensive background, including summary of previous/related work given? Is the project well placed into the context of existing work (including proper referencing of existing work). Is it clear why the project was undertaken and what new information it hopes to provide?
+
+### Feedback and Comments
+
+Specific suggestions: 
+
+* The second-to-last sentence states "Our research aims to define trends over time in tick species looking into pathogen prevalence, and microbiome shifts". There is no mention of microbiome (does this mean tick gut microbiome?) elsewhere in the background section--if this will be one component of the study, it should be expounded on in the background.
+
+* The author states "When investigating multiple tick species, it becomes clear that each species has its own variation in lifecycle and disease prevalence that comes along with it." It would be helpful if the author could present the most important tick lifecycle, ecology, and disease prevalance information relevant to this study for the tick species and pathogens being investigated.
+
+* Can you provide more information on the pathogen tests--were all sampled ticks subject to the same suite of pathogen tests? How reliable are these tests (rate of false positives/false negatives) and does the reliability of the tests differ by tick species and/or tick life stage?
+
+### Summary assessment
+
+* some contextualization and motivation
+
+## Question description
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+
+### Feedback and Comments
+
+THE QUESTIONS COULD USE A BIT MORE DETAIL. FOR EXAMPLE:
+
+* For the question "How the habitat effects the prevalence of pathogens in ticks?" the author states that "The habitats are broken into a few different locations, some more rural than others and with different tree communities." --it's not clear to me what this means. Is habitat a categorical variable with a few levels, and the question is then whether or not pathogen prevalence differs among those habitat levels? Also, please clarify the spatiotemporal extent of this question (across the USA, what time period)? Will this question be addressed for particular tick species?
+
+* For the question "What factors have the greatest influence on a tick carrying a pathogen?"--unless the factors are too numerous to list, it would be useful ot know what factors will be investigated.
+
+* Since certain pathogens are found only on certain tick species, it seems that the question "What factors have the greatest influence on a tick carrying a pathogen?" will almost certainly yield the answer that tick species is a major predictor--but that is already known, so it seems it would be more meaningful to ask this question separately for each tick species (i.e., take "species" out of the list of prediction variables). In other words, if species A is a potential host for 10 pathogens and it's also known that species B is a potential host for only 3 pathogens, it may not be particularly useful to know that species is an important predictor of number of pathogens. In addition, the key predictors may differ by tick species--which may be a further reason to conduct the analysis separately for each tick species. It's not clear from the questions
+
+* Does this study focus on just a few tick species, or on all tick species found in Georgia? Does it focus on just a few of the most common tick pathogens in Georgia? It would be useful to include these details (what tick species, is the study limited to Georgia, what is the timescale of the study, etc.) in the questions themselves so readers can know the scope of the study from the questions.
+
+### Summary assessment
+
+* question/hypotheses somewhat explained
+
+## Data description
+How well is the data overall described? Is the source provided? Is a codebook or other meta-information available that makes it clear what the data is? 
+
+### Feedback and Comments
+
+THE AUTHOR PROVIDES A REASONABLE DESCRIPTION OF THE DATA, BUT ADDITIONAL CLARIFICATIONS WOULD BE USEFUL:
+
+* It would be useful to be able to get more information about the sampling design--for example, were ticks collected opportunistically, or following a standardized approach that distributed sampling efforts evenly across Georgia? 
+
+* It sounds like ticks may have been collected by walking transect(s) within sites--please provide more information about how "clustered" the sampling was. If many ticks were sampled from each of a few transects (or sites), it seems that the ticks sampled from the same transects/sites might be more similar in the response variable (# of pathogens) due to local transmission. Such hierarchical sampling may need to be accounted for in analyses, e.g., by including transects/sites as random effects. 
+
+* Can you provide general information about sample sizes? (e.g., hundreds of tick samples? Thousands?)
+
+* What is the difference between the variables 'region' and 'site', and how was sampling allocated among regions vs. sites?
+
+* Is 'general habitat' a categorical variable with specific levels? 
+
+* In 'background', the author states "Our research aims to define trends over time in tick species looking into pathogen prevalence, and microbiome shifts". But the data for this study were collected over only one year. Does "trends over time" means trends over the course of only one year? Please clarify.
+
+### Summary assessment
+
+* source and overall structure of data somewhat explained
+
+## Data wrangling and exploratory analysis
+How well is the data cleaned/processed and explored? Are all steps reasonable and well explained? Are alternatives discussed and considered? Are meaningful exploratory results shown (e.g. in the supplementary materials)?
+
+### Feedback and Comments
+
+Specific suggestions:
+
+* The author states "we calculate the total number of pathogens found within single individuals."--does this mean the number of unique pathogen species, or does it mean the number of pathogen individuals (regardless of pathogen species) in each sampled tick?
+
+* Related to the above point--in the 'General Background Information', the author states '... co-infections can have an impact on ...diagnostic tests used for detecting the specific pathogens." This suggests to me potential bias (or reporting error) in the response variable (# of pathogens) if co-infection is occurring. Please discuss how this may affect the accuracy of the response variable.
+
+* The author states 'larvae could only be infected with pathogens that are transovarially passed to the offspring (like Rickettsia) and the two pathogens consistently tested for (A. phagocytophilum and Borrelia spp.) are not known to be transmitted in this way.'--was the larvae category excluded from analyses? (seems like it should be)  In addition, the phrase 'the two pathogens consistently tested for' seems to suggest that sampled ticks did not necessarily undergo the same suite of pathogen tests (i.e., some ticks may have been tested for more pathogens than other ticks were)--please clarify, because it seems that could introduce bias to the study.
+
+* It would be useful to see a more thorough exploration of the variables in this study. For example, can you show histograms of the predictor variables, perhaps split out by tick species? Since some of the predictor variables are spatial, it would be useful to see maps as well (e.g., how are tick and pathogen species distributed across the regions?). 
+
+* Scatterplots could be used to explore potential correlation among predictor variables.
+
+* Fig. 1 (the number of individuals per species that tested positive for a particular pathogen) - since the number of ticks sampled varies by tick species, it might make for sense to present results so they are scaled by the actual number of tick sampled--because one positive out of 10 ticks sampled for a species is quite different from one positive out of 100 ticks sampled for a species. So consider changing the y-axis label to something like (# positive out of 100 ticks sampled)
+
+* Fig. 2--I'm having difficulties understanding this figure. The x-axis is a bar chart with two bars, but the values on the axis suggest it's a continuous variable and each bar spans multiple numbers. The caption mentions that the figure shows that each region had similar sampling effort, but I'm not sure how that is shown in the figure.
+
+### Summary assessment
+
+* some weaknesses in wrangling and exploratory component
+
+## Appropriateness of Analysis
+Were the analysis methods appropriate for the data? Was the analysis done properly? Were different components of the analysis (e.g. performance measure, variable selection, data pre-processing, model evaluation) done in the best way possible and explained well?
+
+### Feedback and Comments
+
+I THINK THE ANALYSIS WAS APPROPRIATE FOR THE DATA, BUT I WOULD NEED MORE INFORMATION ON THE SAMPLING, PREDICTORS AND RESPONSE VARIABLES TO ANSWER THIS QUESTION. THE MANUSCRIPT DIDN'T PROVIDE MUCH INFORMATION ABOUT PERFORMANCE MEASURE OR MODEL EVALUATION, AS FAR AS I COULD TELL.
+
+* The random forest model "is showing that tick density in a region is the largest predictor" (of total pathogen)-- how was tick density estimated? Was the sampling implemented in a way that allowed unbiased estimation of tick density and accounted for sampling effort? How was area sampled estimated (since that would be the denominator for tick density)? I don't recall seeing this predictor in the data description, which only identified these variables: "There are multiple tick species that were identified, and samples from each life stage is present. The habitat information includes: season, region, site, and general habitat."
+
+* How is the response variable (pathogen prevalence) defined, and is that different from "total pathogen"? Is it measured per site? Does it take into account the number of ticks sampled from the site? I'm assuming this is a metric such as % positive (out of the number of ticks sampled) rather than # positive for a site? Can you please clarify?
+
+* Fig. 4--can you include in the caption more information on how to "read" the output from the random forest model? It looks different from the output in our class exercise, so I'm not quite sure what the numbers some. One of the numbers in each box indicates accuracy or some other measure of model performance?
+
+* Can you provide more details on the parameters of the analysis? For example, what % of the data were used for training? 
+
+### Summary assessment
+
+* defensible but not optimal analysis (I think??)
+
+## Presentation
+How well are results presented? Are tables and figures easy to read and understand? Are the main figures/tables publication level quality? 
+
+### Feedback and Comments
+
+THE FLOW CHART RESULT OF THE RANDOM FOREST MODEL IS NICE, BUT I WASN'T QUITE SURE HOW TO INTPERPRET THE NUMBERS IN THE FLOW CHART. 
+
+Additional suggestions:
+
+* How did the model perform on the test data? Can you provide a confusion matrix or other summary of how well the model performed?
+
+### Summary assessment
+
+* results are presented ok, with room for improvement
+
+## Discussion/Conclusions
+Are the study findings properly discussed? Are strengths and limitations acknowledged? Are findings interpreted properly?
+
+### Feedback and Comments
+
+IN GENERAL, THE AUTHOR PRESENTS INTERESTING AND USEFUL INFORMATION IN THE DISCUSSION. IT SEEMS THE FINDINGS WERE INTERPRETED CORRECTLY, BUT I DON'T QUITE FEEL THERE WAS SUFFICIENT INFORMATION ABOUT THE SAMPLING, ANALYSES AND RESPONSE/PREDICTOR VARIABLES (I.E., NOT ENOUGH DETAIL IN OTHER PARTS OF THE MANUSCRIPT) TO REALLY JUDGE IF ANALYSES WERE APPROPRIATE AND IF FINDINGS WERE INTERPRETED PROPERLY.
+
+Specific suggestions:
+
+* Please provide references/citations to support statements about other studies, etc.
+
+* It's a bit difficult to see how the information relates to the analysis results--in part because I wasn't quite sure how to interpret the numbers in the results and I'm a bit confused about what predictors were actually included, how the response was calculated, etc.
+
+### Summary assessment
+
+* minor parts wrong, missing or unclear
+
+## Further comments
+
+THIS IS AN INTERESTING PROJECT ON A VERY IMPORTANT TOPIC! MY MAIN SUGGESTION WOULD BE TO PROVIDE MORE INFORMATION ABOUT THE FIELD SAMPLING AND THE PREDICTORS/RESPONSE VARIABLES OF INTEREST, CONDUCT A MORE COMPREHENSIVE EXPLORATION OF THE DATA, AND TO COMPARE A FEW DIFFERENT APPROACHES TO ANALYZING THE DATA.
+IN ADDITION, THE FACT THAT CERTAIN PATHOGENS ARE ONLY (OR PRIMARILY) ASSOCIATED WITH CERTAIN TICK SPECIES AND THAT THE NUMBER OF TICKS SAMPLED MAY DIFFER ACROSS SITES (I ASSUME, I COULDN'T QUITE TELL FROM THE MANUSCRIPT) COULD BIAS RESULTS AND/OR COULD SUGGEST THAT ANALYSES MAY NEED TO ACCOUNT FOR SOME OF THESE SAMPLING/ECOLOGY FACTORS IN A WAY DIFFERENT FROM THE PRESENT ANALYSIS (BUT I'M NOT QUITE SURE--ADDITIONAL INFORMATION ON THESE ASPECTS OF SAMPLING AND TICK/PATHOGEN ECOLOGY WOULD BE HELPFUL FOR ANSWERING SUCH QUESTIONS ABOUT APPROPRIATENESS OF THE PRESENT ANALYSIS).
+
+# Overall project content evaluation
+
+## Structure
+Is the project well structured? Are files in well labeled folders? Do files have reasonable names? Are all "junk" files not needed for analysis/reproduction removed? By just looking at files and folders, can you get an idea of how things fit together?
+
+### Feedback and Comments
+
+THE PROJECT IS MOSTLY WELL-STRUCTURED. FOLDER AND FILE NAMES ARE CLEAR AND ORGANIZED. THERE ARE SOME "JUNK" FILES FROM THE ORIGINAL PROJECT TEMPLATE THAT ARE NOT RELEVANT TO THIS STUDY, SO SHOULD BE REMOVED.
+
+### Summary assessment
+
+* mostly clear, but some confusing parts (e.g. useless files, things in the wrong folders)
+
+## Documentation 
+How well is the project documented? Are you able to understand each step of the whole analysis, each decision that was made, and each line of code? Is enough information provided as comments in code or as part of Rmd files? 
+
+### Feedback and Comments
+
+THE SCRIPTS ARE WELL-COMMENTED AND PRESENTED IN LOGICAL ORDER.
+
+### Summary assessment
+
+* fully and well documented
+
+## Reproducibility
+Are all results fully reproducible? Is documentation provided which clearly explains how to reproduce things, and does it work without the need for any manual intervention?
+
+### Feedback and Comments
+
+BECAUSE PACKAGES ARE LOADED AT VARIOUS STAGES IN THE SCRIPT (NOT ALL AT THE BEGINNING), I GOT PARTWAY THROUGH KNITTING THE MANUSCRIPT BEFORE GETTING AN ERROR THAT A PACKAGE WAS MISSING--THIS HAPPENED SEVERAL TIMES. AFTER GETTING BEYOND THOSE PACKAGE ISSUES, THE MANUSCRIPT KNIT WITHOUT ANY PROBLEMS.
+
+### Summary assessment
+
+* small parts not reproducible or required manual intervention 
+
+## Thoroughness
+How thorough was the overall study? Were alternatives (e.g. different ways of processing the data or different models) considered? Were alternatives discussed? Were the questions/hypotheses fully and thoroughly addressed?
+
+### Feedback and Comments
+
+I DON'T THINK ALTERNATIVE MODELS WERE CONSIDERED OR DISCUSSED (FROM WHAT I COULD TELL).THE THREE QUESTIONS WERE MOSTLY ADDRESSED WITH THE RANDOM FOREST MODEL IT SEEMS, BUT I'M NOT QUITE SURE HOW THE FIRST (HABITAT) QUESTION WAS ADDRESSED EXCEPT THAT HABITAT WAS ONE OF THE PREDICTORS IN THE MODEL. IT SEEMS THE QUESTIONS COULD HAVE BEEN ANSWERED IN MANY DIFFERENT WAYS, AND IT WOULD BE USEFUL TO SEE HOW RANDOM FOREST RESULTS COMPARED WITH OTHER REGRESSION-LIKE ANALYSIS APPROACHES.
+
+### Summary assessment
+
+* decent level of thoroughness
+
+
+
+
+
+
+
+

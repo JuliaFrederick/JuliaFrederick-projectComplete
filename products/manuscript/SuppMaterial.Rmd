@@ -14,10 +14,10 @@ csl: ../apa.csl
 ---
 
 ## Bivariate Analysis
-![Figure 2. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.](../../results/lifeLandfigure.png)  
-Figure 2. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.  
+![Figure 1. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.](../../results/lifeLandfigure.png)  
+Figure 1. Tick lifestage versus the habitat. This figure shows the number of individuals in each lifestage found in the different habitats.  
 
-We can also use this dataset to see if lifestage has any relationship to habitat (fig 2). Overall, we can see that BHL and Upland have the most ticks of any lifestage found throughout it. However, there are pockets in Upland that have large numbers of nymphs found. Despite equal sampling efforts certain habitats had significantly lower amounts of ticks found in them. 
+We can also use this dataset to see if lifestage has any relationship to habitat (fig 1). Overall, we can see that BHL and Upland have the most ticks of any lifestage found throughout it. However, there are pockets in Upland that have large numbers of nymphs found. Despite equal sampling efforts certain habitats had significantly lower amounts of ticks found in them. 
 
 ### Looking at linear models
 ```{r simplelm, echo = FALSE }

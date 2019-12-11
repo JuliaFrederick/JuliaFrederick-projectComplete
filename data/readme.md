@@ -1,13 +1,6 @@
-The folders inside this folder should contain all data at various stages.
+Within this folder are 3 main areas:  
 
-You should place the raw data in the raw_data folder and do not edit it. Ever!
-
-Ideally, load the raw data into R and do all changes there with code, so everyting is automatically reproducible and documented.
-
-Sometimes, you need to edit the files in the format you got. For instance, Excel files are sometimes so poorly formatted that it's close to impossible to read them into R, or the persons you got the data from used color to code some information, which of course won't import into R. In those cases, you might have to make modifications in a software other than R. 
-
-If you need to make edits in whatever format you got the data (e.g. Excel), make a copy and place those copies in a separate folder, AND ONLY EDIT THOSE COPIES. 
-
-Also, write down somewhere the edits you made. 
-
-Add as many sub-folders as suitable. If you only have a single processing step, one sub-folder for processed data is enough. If you have multiple stages of cleaning and processing, additional sub-folders might be useful. Adjust based on the complexity of your project.
+* A `SamplingSite.jpg` this file is used in the manuscript but displays the sampling sites used in this research.  
+* A `raw_data` folder which contains the main .csv file used in this analysis in its most raw form that can be imported into R.  
+  + If you want to see the raw Excel files look in the `rawExcelFiles` folder in the main project folder.  
+* A `processed_data` folder where all data files will be stores from the R scripts

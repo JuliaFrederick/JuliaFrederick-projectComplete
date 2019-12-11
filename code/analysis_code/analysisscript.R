@@ -31,9 +31,11 @@ speciesLand<-meltpath %>%
   ggplot(aes(x=Habitat,y=value, fill=variable)) +
   geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  facet_wrap(.~Species)
+  facet_wrap(.~Species,scales="free_y",labeller = (groupwrap = label_wrap_gen(10))) + 
+  labs(fill="Pathogen") +
+  ylab("Number of Ticks Tested Positive")
 
-ggsave(filename=here("././results/speciesLandfigure.png"),plot=speciesLand) 
+ggsave(filename=here("././results/speciesLandfigure.png"),plot=speciesLand, width = 6, height = 5, dpi = 300, units = "in") 
 
 # fit linear model
 lmfitSpecies <- lm(Habitat ~ Species, meltpath)  

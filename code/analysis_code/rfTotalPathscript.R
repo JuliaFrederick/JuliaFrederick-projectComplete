@@ -32,11 +32,11 @@ outcomename = "TotalPath"
 Npred <- ncol(data_train)-1 # number of predictors
 resultmat <- data.frame(Variable = names(data_train)[-1], Accuracy = rep(0,Npred)) #store performance for each variable
 
-fitControl <- trainControl(method="repeatedcv",number=5,repeats=5) 
+fitControl <- caret::trainControl(method="repeatedcv",number=5,repeats=5) 
 fit1 = caret::train(TotalPath  ~ ., data=data_train, method="rpart",  trControl = fitControl, na.action = na.pass, tuneLength = 10) 
 print(fit1$results)
 
-prp(fit1$finalModel, extra = 1, type = 1)
+prp(fit1$finalModel, extra = 100, under=TRUE, type = 0, yesno=1, fallen.leaves = TRUE, varlen = 20, under.cex = 1.5,round=0)
 ww=17.8/2.54; wh=ww; #for saving plot
 dev.print(device=png,width=ww,height=wh,units="in",res=600,file=here("././results/rparttree.png")) #save tree to file
 
@@ -47,10 +47,10 @@ outcomename = "TotalPath"
 Npred <- ncol(xytickpath)-1 # number of predictors
 resultmat <- data.frame(Variable = names(xytickpath)[-1], Accuracy = rep(0,Npred)) #store performance for each variable
 
-fitControl <- trainControl(method="repeatedcv",number=5,repeats=5) 
+fitControl <- caret::trainControl(method="repeatedcv",number=5,repeats=5) 
 fit2 = caret::train(TotalPath  ~ ., data=xytickpath, method="rpart",  trControl = fitControl, na.action = na.pass, tuneLength = 10) 
 print(fit2$results)
 
-prp(fit2$finalModel, extra = 1, type = 1)
+prp(fit2$finalModel, extra = 1, type = 1, varlen = 20)
 ww=17.8/2.54; wh=ww; #for saving plot
 dev.print(device=png,width=ww,height=wh,units="in",res=600,file=here("././results/rparttreeFull.png")) #save tree to file

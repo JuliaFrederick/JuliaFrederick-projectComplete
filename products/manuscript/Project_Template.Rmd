@@ -12,31 +12,6 @@ output:
 bibliography: ../references.bib
 csl: ../apa.csl
 ---
-```{r AllLibs, include=FALSE}
-library('readxl')
-library('knitr')
-library('dplyr')
-library('DataCombine')
-library('ggplot2')
-library('stats')
-library('reshape2')
-library('here')
-library('broom')
-library('pander')
-library('forcats')
-library('doParallel')
-library('rpart')
-library('rpart.plot')
-library('mda')
-library('ranger')
-library('e1071')
-library('gbm')
-library('caret')
-library('mlr')
-library('visdat')
-library('parallelMap')
-```
-
 
 # Summary/Abstract
 Tick-borne disease is increasingly a public health concern in the United States. With more that 50,000 cases being confirmed annually by the CDC and estimating a 10-fold higher case rate actually occurring, understanding the disease system at play is of the utmost importance. Through tick dragging, almost 2000 individuals were collected, ID-ed through morphology, and tested using PCR for pathogens in order to determine how the environment determines the risk for disease. This data is use to determine how habitat can influence pathogen prevalence, which readily available factors are contributing to disease risk, and how specific disease system vary from overall tick-borne disease. Through this research it is confirmed that tick population size, and season are two major factors in determining disease risk. When you look specifically at the Lyme disease system using *Ixodes scapularis* and *Borrelia spp.* you see that the season and region are the main contributing factors, and population size falls off. This shows that understanding the overall dynamics of tick-borne disease can be useful but that it cannot apply across all individual disease systems. 

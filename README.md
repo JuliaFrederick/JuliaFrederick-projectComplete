@@ -8,7 +8,8 @@ A supplemental material document can also be created by running the `products/ma
 
 This is a template for a data analysis project using R, Rmarkdown (and variants, e.g. bookdown), Github and a reference manager that can handle bibtex (I recommend [Jabref](http://www.jabref.org/) or [Zotero](https://www.zotero.org/)). It is also assumed that you have a word processor installed (e.g. MS Word or [LibreOffice](https://www.libreoffice.org/)). You need that software stack to make use of this template.  
 
-It also requires multiple packages they may need to be installed prior to running. These include: readxl, knitr, dplyr, DataCombine, ggplot2, stats, reshape2, here, broom, pander, forcats, doParallel, rpart, rpart.plot, mda, ranger, e1071, gbm, caret, mlr, visdat, parallelMap
+## Packages to be installed prior to running
+This project also requires multiple packages they may need to be installed prior to running, if they aren't already on your computer. These include: bookdown, readxl, knitr, dplyr, DataCombine, ggplot2, stats, reshape2, here, broom, pander, forcats, doParallel, rpart, rpart.plot, mda, ranger, e1071, gbm, caret, mlr, visdat, parallelMap
 
 # Structure
 
